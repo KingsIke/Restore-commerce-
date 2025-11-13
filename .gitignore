@@ -1,0 +1,9 @@
+.vs/
+bin/
+obj/
+node_modules/
+dist/
+.vscode/settings.json
+*.user
+*.suo
+appsettings.Development.json
