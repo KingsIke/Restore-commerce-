@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import type { IProduct } from '../model/product';
-import Catalog from '../../features/catalog/Catalog';
+import { useState } from 'react';
+//import {Catalog} from '../../features/catalog/Catalog';
 import {Box, Container, createTheme, CssBaseline, ThemeProvider} from '@mui/material';
 import { Navbar } from './Navbar';
+import { Outlet } from 'react-router-dom';
 
 function App() {
-  const [products, setProducts] = useState<IProduct[]>([]);
   const [darkMode, setDarkMode] = useState(false);
 
 
@@ -26,16 +24,7 @@ function App() {
     setDarkMode(!darkMode);
   };
 
-  useEffect(() => {
-    axios.get('http://localhost:3050/api/products')
-      .then(response => {
-        console.log('Axios response:', response);
-        setProducts(response.data);
-      })
-      .catch(error => {
-        console.error('Axios error:', error);
-      });
-  }, []);
+
 
  
 
@@ -52,7 +41,7 @@ function App() {
         }}>
   <Container maxWidth="xl" sx={{mt:8}}>
    
-      <Catalog products={products} />
+      <Outlet />
 
     </Container>
     </Box>
