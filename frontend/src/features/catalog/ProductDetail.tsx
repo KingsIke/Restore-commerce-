@@ -3,12 +3,16 @@ import { useParams } from "react-router-dom";
 import type { IProduct } from "../../app/model/product";
 import axios from 'axios';
 import { Button, Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
+import { useGetProductByIdQuery } from "./catalogApi";
+import { Loading } from "../loader/Loading";
+import icon from "../../assets/icon.ico";
+
 
 
 export const ProductDetail = () => {
-  const {id} = useParams<{id:string}>();
+  const {id} = useParams();
 
-  const [product, setProduct] = useState<IProduct | null>(null);
+ /* const [product, setProduct] = useState<IProduct | null>(null);
 
    useEffect(() => {
         axios.get(`http://localhost:3050/api/products/${id}`)
@@ -20,8 +24,28 @@ export const ProductDetail = () => {
             console.error('Product Detail Axios error:', error);
           });
       }, [id]);
+*/
+      const {data: product, isLoading} = useGetProductByIdQuery(Number(id));
 
-      if (!product) return <div>Loading...</div>;
+      if (!product || isLoading) 
+        return (
+     <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: "80vh" }}
+    
+>
+      <Loading 
+        src = {icon}
+        size = {100}
+        borderSize = {5}
+        borderColor = "#1976d2"
+      />   
+       <Typography variant="h4" sx={{mt:2}}>Loading product details...</Typography>  
+      </Grid>
+        
+      );
 
 
     const productDetails = [

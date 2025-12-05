@@ -9,10 +9,13 @@ import '@fontsource/roboto/700.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './app/routes/Routes.tsx';
 import { Provider } from 'react-redux';
+import { store } from './app/store/store.ts';
 
-import { configureTheStore } from './app/store/store.ts';
+/*import { configureTheStore } from './app/store/store.ts';
 
 const store = configureTheStore();
+*/
+
 console.log(store.getState());
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

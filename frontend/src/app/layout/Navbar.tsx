@@ -1,6 +1,10 @@
 import { DarkMode, LightMode, ShoppingCart } from "@mui/icons-material";
-import { AppBar, Badge, Box, IconButton, List, ListItem, Toolbar, Typography } from "@mui/material"
+import { AppBar, Badge, Box, Grid, IconButton, List, ListItem, Toolbar, Typography } from "@mui/material"
 import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../store/store";
+import { Loading } from "../../features/loader/Loading";
+import icon from "../../assets/icon.ico";
+
 
 const midLinks = [
     {title: 'catalog', path: '/catalog'},
@@ -34,7 +38,7 @@ export const Navbar = ({
 }:NavbarProps
 ) => {
   
-
+const {isLoading} = useAppSelector((state) => state.ui);
   return (
    <AppBar position="fixed" >
         <Toolbar sx={{display:'flex', alignItems:'center', justifyContent: "space-between"}}>
@@ -87,6 +91,24 @@ export const Navbar = ({
 
             
         </Toolbar>
+        {
+        isLoading && (
+             <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: "80vh" }}
+    
+>
+      <Loading 
+        src = {icon}
+        size = {100}
+        borderSize = {5}
+        borderColor = "#13c528ff"
+      />    
+      </Grid>
+        )
+    }
     </AppBar>
   )
 }

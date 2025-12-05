@@ -36,7 +36,9 @@ function App() {
       sx={{
         background: darkMode ? "radial-gradient(circle, #1e3aBa, #111B27)":"radial-gradient(circle, #baecf9, #f0f9ff)", 
         minHeight:"100vh",
-        py:6
+        py:6,
+         width: '100vw',
+
 
         }}>
   <Container maxWidth="xl" sx={{mt:8}}>
