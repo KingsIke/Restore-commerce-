@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/store";
 import { Loading } from "../../features/loader/Loading";
 import icon from "../../assets/icon.ico";
+import { useDispatch } from "react-redux";
+import { setDarkMode } from "./uiSlice";
 
 
 const midLinks = [
@@ -27,18 +29,12 @@ const navStyle = {
                             color: '#03f8e4ff'
                         }
                     }
-type NavbarProps = {
-    toggleDarkMode: () => void;
-    darkMode: boolean;
-};
 
-export const Navbar = ({
-    toggleDarkMode,
-    darkMode
-}:NavbarProps
-) => {
+
+export const Navbar = () => {
   
-const {isLoading} = useAppSelector((state) => state.ui);
+const {isLoading, darkMode} = useAppSelector((state) => state.ui);
+const dispatch = useDispatch()
   return (
    <AppBar position="fixed" >
         <Toolbar sx={{display:'flex', alignItems:'center', justifyContent: "space-between"}}>
@@ -47,7 +43,7 @@ const {isLoading} = useAppSelector((state) => state.ui);
                 Re-Store
             </Typography>
 
-            <IconButton onClick={toggleDarkMode} sx={{mr:10}}>
+            <IconButton onClick={()=> dispatch(setDarkMode())} sx={{ml:2}}>
                 {darkMode ? <DarkMode/> : < LightMode sx={{color:"yellow"}} />}
             </IconButton>
             </Box>

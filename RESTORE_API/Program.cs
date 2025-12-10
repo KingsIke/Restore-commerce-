@@ -1,6 +1,7 @@
 using RESTORE_API;
 using Microsoft.EntityFrameworkCore;
 using RESTORE_API.Data;
+using RESTORE_API.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddTransient<ExceptionMiddleware>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 // builder.Services.AddOpenApi();
 
@@ -36,7 +39,7 @@ var app = builder.Build();
 
 // app.UseAuthorization();
 
-
+app.UseMiddleware<ExceptionMiddleware>();
 // Adding Cors Policy
 //app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 app.UseCors("AllowReactApp");

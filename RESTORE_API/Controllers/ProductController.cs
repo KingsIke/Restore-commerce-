@@ -5,9 +5,7 @@ using RESTORE_API.Entities;
 
 namespace RESTORE_API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController( StoreContext context) : ControllerBase
+    public class ProductsController( StoreContext context) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts()
