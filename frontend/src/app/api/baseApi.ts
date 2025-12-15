@@ -37,6 +37,7 @@ export const baseQueryWithErrorHandling = async (args: string | FetchArgs, api: 
             case 404:
                 console.error('Not Found - The requested resource could not be found.');
                 toast.error((data as {title: string}).title);
+                router.navigate('/not-found')
                 break;
 
             case 500:
