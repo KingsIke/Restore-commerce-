@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import axios from 'axios';
-import type { IProduct } from "../../app/model/product";
+// import { useEffect, useState } from "react";
+// import axios from 'axios';
+// import type { IProduct } from "../../app/model/product";
 import ProductList from "./ProductList";
 import { useGetProductsQuery } from "./catalogApi";
 import { Loading } from "../loader/Loading";
