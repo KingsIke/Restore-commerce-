@@ -4,22 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RESTORE_API.DTOs;
 using RESTORE_API.Entities;
+using RESTORE_API.Extensions;
 
 namespace RESTORE_API.Controllers
 {
     public class BasketController(StoreContext context):BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<Basket>> GetBasket()
+        public async Task<ActionResult<BasketDto>> GetBasket()
         {
             var basket = await RetrieveBasket();
 
             if(basket == null) return NoContent();
-            return basket;
+            return basket.ToDto();
         }
         
-        public async Task<ActionResult> AddItemToBasket(int productId, int quantity)
+        [HttpPost]
+        public async Task<ActionResult<BasketDto>> AddItemToBasket(int productId, int quantity)
         {
             var basket = await RetrieveBasket();
             basket ??= CreateBasket();
@@ -29,9 +32,15 @@ namespace RESTORE_API.Controllers
             basket.AddItem(product, quantity);
             var result = await context.SaveChangesAsync() > 0;
 
-            if(result) return CreatedAtAction(nameof(GetBasket), basket);
+            if(result) return CreatedAtAction(nameof(GetBasket), basket.ToDto());
             return BadRequest("Problem updating basket");
         }
+
+        // [HttpDelete]
+        // public async Task<ActionResult<BasketDto>> RemoveBasket()
+        // {
+            
+        // }
 
         private Basket CreateBasket()
         {

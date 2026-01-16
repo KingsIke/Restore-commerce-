@@ -20,6 +20,7 @@ builder.Services.AddDbContext<StoreContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddHealthChecks();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 // builder.Services.AddOpenApi();
@@ -43,7 +44,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 // Adding Cors Policy
 //app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 app.UseCors("AllowReactApp");
-
+app.MapHealthChecks("/health");
 
 app.MapControllers();
 // db stater

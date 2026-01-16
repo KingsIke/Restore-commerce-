@@ -15,5 +15,8 @@ namespace RESTORE_API.Entities
         public int ProductId { get; set; }
 
         public required Product Product  { get; set; }
+        public int BasketId { get; set; }
+
+        public Basket Basket { get; set; } = null!;
     }
 }
