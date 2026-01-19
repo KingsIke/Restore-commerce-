@@ -36,11 +36,21 @@ namespace RESTORE_API.Controllers
             return BadRequest("Problem updating basket");
         }
 
-        // [HttpDelete]
-        // public async Task<ActionResult<BasketDto>> RemoveBasket()
-        // {
-            
-        // }
+        [HttpDelete]
+        public async Task<ActionResult<BasketDto>> RemoveBasket(int productId, int quantity)
+        {
+            var basket = await RetrieveBasket();
+
+            if(basket == null) return BadRequest("Unable to retrive a basket");
+
+            basket.RemoveItem(productId, quantity);
+
+            var result = await context.SaveChangesAsync() > 0;
+
+            if(result) return Ok();
+
+            return BadRequest("Problem removing item from the basket, check if the product exists in the basket");
+        }
 
         private Basket CreateBasket()
         {
