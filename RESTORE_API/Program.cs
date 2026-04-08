@@ -11,7 +11,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactApp",
         policy => policy.WithOrigins("https://localhost:3000", "https://localhost:3100")
                         .AllowAnyMethod()
-                        .AllowAnyHeader());
+                        .AllowAnyHeader()
+                        .AllowCredentials());
 });
 
 builder.Services.AddControllers();
@@ -44,6 +45,11 @@ app.UseMiddleware<ExceptionMiddleware>();
 // Adding Cors Policy
 //app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 app.UseCors("AllowReactApp");
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.None,
+    Secure = CookieSecurePolicy.Always
+});
 app.MapHealthChecks("/health");
 
 app.MapControllers();

@@ -8,6 +8,8 @@ import { ContagePage } from "../../features/contact/ContagePage";
 import { ErrorPage } from "../../features/about/ErrorPage";
 import { ServerError } from "../error/ServerError";
 import { Error404 } from "../error/Error404";
+import { BasketPage } from "../../features/basket/BasketPage";
+import { CheckOutPage } from "../../features/checkout/CheckOutPage";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +21,8 @@ export const router = createBrowserRouter([
              {path: '/catalog/:id', element: <ProductDetail />},   
              {path: '/about', element: <AboutPage />},
              {path: '/contact', element: <ContagePage />},
+             {path: '/basket', element: <BasketPage />},
+             {path: '/checkout', element: <CheckOutPage />},
              {path: '/error', element: <ErrorPage />},
              {path: '/server-error', element: <ServerError />},
              {path: '/not-found', element: <Error404 />},

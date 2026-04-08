@@ -52,6 +52,7 @@ namespace RESTORE_API.Controllers
             return BadRequest("Problem removing item from the basket, check if the product exists in the basket");
         }
 
+//Creating cookies and saving them
         private Basket CreateBasket()
         {
           var basketId = Guid.NewGuid().ToString();

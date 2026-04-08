@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import type { IProduct } from "../../app/model/product";
-import axios from 'axios';
 import { Button, Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import { useGetProductByIdQuery } from "./catalogApi";
 import { Loading } from "../loader/Loading";
 import icon from "../../assets/icon.ico";
+import { useAddItemToBasketMutation, useGetBasketQuery, useRemoveItemFromBasketMutation } from "../basket/basketApi";
 
 
 
 export const ProductDetail = () => {
   const {id} = useParams();
+  const [removeBasketItem] = useRemoveItemFromBasketMutation();
+  const [addItemToBasket] = useAddItemToBasketMutation();
+  const {data:basket} = useGetBasketQuery();
+  const item = basket?.items.find(i => i.productId === Number(id));
+  const [quantity, setQuantity] = useState(0);
+
+  useEffect(() => {
+    if(item) setQuantity(item.quantity);
+  }, [item]);
+
+
+
+
+
 
  /* const [product, setProduct] = useState<IProduct | null>(null);
 
@@ -27,6 +40,7 @@ export const ProductDetail = () => {
 */
       const {data: product, isLoading} = useGetProductByIdQuery(Number(id));
 
+      
       if (!product || isLoading) 
         return (
      <Grid
@@ -48,6 +62,20 @@ export const ProductDetail = () => {
       );
 
 
+        const handleUpdateBasket = () => {
+    const updatedQuantity = item ? Math.abs(quantity - item.quantity) : quantity;
+    if(!item || quantity > item.quantity) {
+      addItemToBasket({product, quantity: updatedQuantity});
+    }
+    else {
+      removeBasketItem({productId: product.id, quantity: updatedQuantity});
+    }
+  }
+    
+    const handInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.currentTarget.value);
+    if(value >= 0) setQuantity(value);
+  }
     const productDetails = [
       { label: 'Name', value: product.name },
       { label: 'Description', value: product.description },
@@ -62,7 +90,7 @@ export const ProductDetail = () => {
     ];  
   return (
     <Grid container spacing={6} maxWidth={'lg'} sx={{mx: 'auto'}}>
-      <Grid size={6}>
+      <Grid size={6}> 
         <img 
         src={product?.pictureUrl} 
         alt={product?.name} 
@@ -86,7 +114,7 @@ export const ProductDetail = () => {
             ))}
           </TableBody>  
         </Table>
-      </TableContainer>
+      </TableContainer> 
 
       <Grid container spacing={2} marginTop={3}>
         <Grid size={6}>
@@ -95,20 +123,23 @@ export const ProductDetail = () => {
             variant="outlined"
             type="number"
             fullWidth
-            defaultValue={1}
+            value={quantity}
+            onChange={handInputChange}
           />
         </Grid>
     
         <Grid
           size={6}>
             <Button
+              onClick={handleUpdateBasket}
+              disabled={quantity === item?.quantity || (!item && quantity === 0)}
               variant="contained"
               color="primary"
               size="large"
               fullWidth
               sx={{height: "55px"}}
             >
-              Add to Cart
+             {item ? 'Update Cart' : 'Add to Cart'}
             </Button>
           </Grid>
       </Grid>
