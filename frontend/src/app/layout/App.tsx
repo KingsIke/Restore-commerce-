@@ -2,7 +2,7 @@ import { useState } from 'react';
 //import {Catalog} from '../../features/catalog/Catalog';
 import {Box, Container, createTheme, CssBaseline, ThemeProvider} from '@mui/material';
 import { Navbar } from './Navbar';
-import { Outlet } from 'react-router-dom';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 import { useAppSelector } from '../store/store';
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ScrollRestoration />
       <CssBaseline />
     <Navbar />
     <Box 
