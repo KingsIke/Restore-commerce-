@@ -1,10 +1,10 @@
 import { fetchBaseQuery, type BaseQueryApi, type FetchArgs } from "@reduxjs/toolkit/query";
 import { startLoading, stopLoading } from "../layout/uiSlice";
 import { toast } from "react-toastify";
-import { isServerError, isValidationError } from "../../features/middleware/Validation";
+import {  isValidationError } from "../../features/middleware/Validation";
 import { router } from "../routes/Routes";
 
-const customBaseQuery = fetchBaseQuery({baseUrl: `http://localhost:3050/api`, credentials: "include"});
+const customBaseQuery = fetchBaseQuery({baseUrl: `https://localhost:3051/api`, credentials: "include"});
 
 const sleep = () => new Promise(resolve => setTimeout(resolve, 1000));
 

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-//import {Catalog} from '../../features/catalog/Catalog';
 import {Box, Container, createTheme, CssBaseline, ThemeProvider} from '@mui/material';
 import { Navbar } from './Navbar';
 import { Outlet, ScrollRestoration } from 'react-router-dom';

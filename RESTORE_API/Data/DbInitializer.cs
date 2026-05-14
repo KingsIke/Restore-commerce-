@@ -1,27 +1,52 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RESTORE_API.Entities;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace RESTORE_API.Data;
 
 public class DbInitializer
 {
-    public static void InitDb(WebApplication app)
+    public static async Task InitDb(WebApplication app)
     {
         using var scope = app.Services.CreateScope();
 
         var context = scope.ServiceProvider.GetRequiredService<StoreContext>() ??
         throw new InvalidOperationException("Failed to retrieve store context");
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>() ??
+        throw new InvalidOperationException("Failed to retrieve user manager");
 
-        SeedData(context);
+        await SeedData(context, userManager);
 
     }
 
 
-    private static void SeedData(StoreContext context)
+    private static async Task SeedData(StoreContext context, UserManager<User> userManager)
     {
-        context.Database.Migrate();
-        if (context.Products.Any()) return;
+        await context.Database.MigrateAsync();
+        if (!await userManager.Users.AnyAsync())
+        {
+            var admin = new User
+            {
+                UserName = "admin",
+                Email = "kings@gmail.com",
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(admin, "Pa$$w0rd");
+            await userManager.AddToRolesAsync(admin, new[] { "Admin", "Member" });
+
+             var user = new User
+            {
+                UserName = "member",
+                Email = "king@gmail.com",
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(user, "Pa$$w0rd");
+            await userManager.AddToRoleAsync(user, "Member");
+        };
+        if (await context.Products.AnyAsync()) return;
         var products = new List<Product>
         {
                 new()
@@ -222,8 +247,8 @@ public class DbInitializer
                 },
         };
 
-        context.Products.AddRange(products);
+        await context.Products.AddRangeAsync(products);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }

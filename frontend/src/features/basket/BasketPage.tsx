@@ -1,4 +1,3 @@
-import React from 'react'
 import { useGetBasketQuery } from './basketApi';
 import { Grid, Typography } from '@mui/material';
 import icon from "../../assets/icon.ico";

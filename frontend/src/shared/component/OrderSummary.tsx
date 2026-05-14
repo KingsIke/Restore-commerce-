@@ -6,7 +6,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
 import { formatCurrency } from "../../lib/utils";
 import { useGetBasketQuery } from "../../features/basket/basketApi";
 import type { IBasketItem } from "../../app/model/basket";

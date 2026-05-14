@@ -5,7 +5,6 @@ import icon from "../../assets/icon.ico";
 export const AboutPage = () => {
   const aboutText = `I'm also known as KINGS=IKE!, a Junior Full Stack Developer. I've been coding for about 3 years now. As a Full Stack developer, I've worked on-site and remotely both as an Internships and Associate Developer with startups and large companies, to help build & scale their vision and mission. Along my journey, I realized my passion existed in helping others excel and pursue their dreams as upcoming developers 🎖. With this passion, I know that am going to make an impact in my community and across the globe at large. In addition to my technical skills, I have undergone trainings in soft skills on Agile methodology using scrum,jira for Effective communication, teamwork,time management and emotional intelligence. I understand the importance of these skills in fostering a positive and productive work environment. Also not forgetting am a programmer with passion for bodybuilding, fashion design, swimming, and music. These hobbies allow me to showcase my creativity, maintain a healthy lifestyle, and unwind from the demands of my work🥇.`;
 
-  const imageUrl = "https://cdn.sanity.io/images/pa4j5gzb/production/6f4831fa1ab4f3fed78065972cab36336c290734-1080x1080.jpg";
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
